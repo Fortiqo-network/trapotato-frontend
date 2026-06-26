@@ -10,7 +10,7 @@ export const site = {
   // The download link is wired later; keep empty to show "coming soon".
   downloadUrl: "",
   support: {
-    email: "balraj.fortiqo@gmail.com",
+    email: "trapotato.fortiqo@gmail.com",
     whatsapp: "+91 7000695135",
     whatsappLink: "https://wa.me/917000695135",
   },
