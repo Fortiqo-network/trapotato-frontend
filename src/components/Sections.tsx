@@ -3,22 +3,36 @@ import {
   EyeOff,
   AudioLines,
   KeyRound,
-  Code2,
-  Command,
+  ScanText,
+  Archive,
   ShieldCheck,
-  Image as ImageIcon,
+  MonitorOff,
+  Lock,
+  HardDrive,
+  RefreshCw,
   Mail,
   MessageCircle,
   Bug,
   Download as DownloadIcon,
   Check,
+  ScreenShareOff,
   type LucideIcon,
 } from "lucide-react";
 import { Reveal } from "./Reveal";
-import { site, plans, features, steps } from "@/lib/site";
+import {
+  site,
+  plans,
+  planIncludes,
+  features,
+  steps,
+  actions,
+  shortcuts,
+  aiProviders,
+  transcriptionProviders,
+} from "@/lib/site";
 
 const icons: Record<string, LucideIcon> = {
-  Sparkles, EyeOff, AudioLines, KeyRound, Code2, Command,
+  Sparkles, EyeOff, AudioLines, KeyRound, ScanText, Archive,
 };
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
@@ -27,72 +41,88 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
-/* ── Product briefing ─────────────────────────────────────────── */
-export function Product() {
+/* ── Stealth — the core differentiator ────────────────────────── */
+export function Stealth() {
+  const guarantees = [
+    { icon: ScreenShareOff, t: "Off your screen share", b: "Content-protected against screen sharing and recording — Zoom, Meet, Teams, and OBS capture an empty desktop." },
+    { icon: MonitorOff, t: "Hidden from the system", b: "No taskbar button, no tray icon, no Alt-Tab entry. In Task Manager it quietly appears as “Settings.”" },
+    { icon: EyeOff, t: "Yours alone", b: "Press Ctrl+B to summon or hide it instantly. Ctrl+Shift+B makes it click-through so it never gets in your way." },
+  ];
+
   return (
-    <section id="product" className="relative px-5 py-24">
-      <div className="mx-auto max-w-5xl">
-        <Reveal className="max-w-3xl">
-          <SectionLabel>What it is</SectionLabel>
+    <section id="stealth" className="relative px-5 py-24">
+      <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
+        <Reveal>
+          <SectionLabel>Truly invisible</SectionLabel>
           <h2 className="font-brand text-display-sm font-extrabold">
-            A copilot that listens, understands, and answers — without ever being seen.
+            They share their screen.<br />You share nothing.
           </h2>
-          <p className="mt-5 text-lg leading-relaxed text-graphite">
-            Trapotato runs as a frameless, content-protected overlay on top of your call. It captures the
-            conversation, transcribes it live, and uses your own AI model to draft the perfect response in
-            real time. It never shows up on your screen share, taskbar, or Alt-Tab — so you stay sharp and
-            in control while everything happens quietly on your side.
+          <p className="mt-5 max-w-xl text-lg leading-relaxed text-graphite">
+            Trapotato runs as a frameless, always-on-top overlay that is invisible to screen capture.
+            Flip a single toggle and it vanishes from screen shares, recordings, the taskbar, and the
+            system tray — leaving only the answers on your side of the glass.
           </p>
+
+          <div className="mt-8 space-y-4">
+            {guarantees.map((g) => (
+              <div key={g.t} className="flex gap-4">
+                <div className="mt-0.5 grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-live/10 text-live ring-1 ring-live/20">
+                  <g.icon size={18} />
+                </div>
+                <div>
+                  <h3 className="font-brand text-base font-bold">{g.t}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-graphite">{g.b}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </Reveal>
 
-        <div className="mt-12 grid gap-4 sm:grid-cols-3">
-          {[
-            { icon: ShieldCheck, t: "Private by design", b: "Meeting data and API keys stay on your machine. Only your license is checked online." },
-            { icon: AudioLines, t: "Always listening", b: "System audio + microphone transcribed continuously, with speaker context." },
-            { icon: Sparkles, t: "Under 500ms", b: "Answers stream in as the question is asked — fast enough for live conversation." },
-          ].map((c, i) => (
-            <Reveal key={c.t} delay={i * 0.08}>
-              <div className="ring-hairline h-full rounded-2xl bg-ink-800/40 p-6">
-                <c.icon className="mb-4 text-gold" size={22} />
-                <h3 className="font-brand text-base font-bold">{c.t}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-graphite">{c.b}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+        <Reveal delay={0.1}>
+          <StealthVisual />
+        </Reveal>
       </div>
     </section>
   );
 }
 
-/* ── Demo / screenshots placeholder ───────────────────────────── */
-export function Demo() {
+function StealthVisual() {
   return (
-    <section id="demo" className="relative px-5 py-24">
-      <div className="mx-auto max-w-5xl">
-        <Reveal className="text-center">
-          <SectionLabel>Product demo</SectionLabel>
-          <h2 className="font-brand text-display-sm font-extrabold">See Trapotato in action</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-graphite">
-            A guided walkthrough and live screenshots are on the way.
-          </p>
-        </Reveal>
-
-        <Reveal delay={0.1}>
-          <div className="ring-hairline mt-12 grid aspect-[16/9] place-items-center rounded-3xl bg-ink-800/40">
-            <div className="grain relative flex flex-col items-center gap-3 text-center">
-              <div className="grid h-16 w-16 place-items-center rounded-2xl bg-gold/10 text-gold ring-1 ring-gold/20">
-                <ImageIcon size={26} />
-              </div>
-              <p className="font-brand text-lg font-bold">Demo &amp; screenshots coming soon</p>
-              <p className="max-w-md text-sm text-graphite">
-                This space is reserved for product screenshots and a video walkthrough.
-              </p>
-            </div>
+    <div className="relative">
+      <div className="absolute -inset-6 -z-10 glow-live" />
+      {/* "What they see" — a screen-share frame with nothing on it */}
+      <div className="ring-hairline overflow-hidden rounded-2xl bg-ink-900/70">
+        <div className="flex items-center gap-2 border-b border-porcelain/5 px-4 py-2.5">
+          <ScreenShareOff size={13} className="text-graphite" />
+          <span className="font-brand-mono text-[11px] text-graphite">what they see · screen share</span>
+        </div>
+        <div className="grid aspect-[16/10] place-items-center bg-ink-950/60">
+          <div className="grain relative flex flex-col items-center gap-2 text-center">
+            <EyeOff size={26} className="text-graphite/50" />
+            <p className="font-brand-mono text-xs text-graphite/60">no overlay detected</p>
           </div>
-        </Reveal>
+        </div>
       </div>
-    </section>
+
+      {/* Task Manager row — disguised as "Settings" */}
+      <div className="ring-hairline mt-4 overflow-hidden rounded-xl bg-ink-900/70">
+        <div className="border-b border-porcelain/5 px-4 py-2 font-brand-mono text-[10px] uppercase tracking-wider text-graphite">
+          Task Manager · Processes
+        </div>
+        <div className="divide-y divide-porcelain/5 text-xs">
+          {[
+            { n: "Settings", cpu: "0.4%", live: true },
+            { n: "Code.exe", cpu: "2.1%", live: false },
+            { n: "chrome.exe", cpu: "6.8%", live: false },
+          ].map((row) => (
+            <div key={row.n} className="flex items-center justify-between px-4 py-2.5">
+              <span className={`font-brand-mono ${row.live ? "text-live" : "text-porcelain/70"}`}>{row.n}</span>
+              <span className="text-graphite">{row.cpu}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -123,6 +153,134 @@ export function Features() {
               </Reveal>
             );
           })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── In-meeting actions + global shortcuts ────────────────────── */
+export function Actions() {
+  return (
+    <section id="shortcuts" className="relative px-5 py-24">
+      <div className="mx-auto max-w-6xl">
+        <Reveal>
+          <SectionLabel>One keystroke away</SectionLabel>
+          <h2 className="max-w-2xl font-brand text-display-sm font-extrabold">
+            Seven actions. Zero hunting for a button.
+          </h2>
+          <p className="mt-4 max-w-2xl text-graphite">
+            Every move is a global shortcut — they fire even while the window is hidden. Tap a number and
+            the right kind of help appears in the overlay.
+          </p>
+        </Reveal>
+
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {actions.map((a, i) => (
+            <Reveal key={a.key} delay={(i % 3) * 0.07}>
+              <div className="ring-hairline flex h-full items-start gap-4 rounded-2xl bg-ink-800/40 p-5">
+                <kbd className="kbd mt-0.5 shrink-0">{a.key}</kbd>
+                <div>
+                  <h3 className="font-brand text-base font-bold">{a.title}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-graphite">{a.body}</p>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal delay={0.1}>
+          <div className="ring-hairline mt-6 rounded-2xl bg-ink-900/50 p-6">
+            <div className="mb-4 font-brand-mono text-xs uppercase tracking-widest text-graphite">
+              Global controls
+            </div>
+            <div className="flex flex-wrap gap-x-6 gap-y-3">
+              {shortcuts.map((s) => (
+                <div key={s.key} className="flex items-center gap-2.5">
+                  <kbd className="kbd">{s.key}</kbd>
+                  <span className="text-sm text-porcelain/80">{s.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* ── Bring your own keys / providers ──────────────────────────── */
+export function Providers() {
+  return (
+    <section id="providers" className="relative px-5 py-24">
+      <div className="mx-auto max-w-5xl">
+        <Reveal className="text-center">
+          <SectionLabel>Bring your own keys</SectionLabel>
+          <h2 className="font-brand text-display-sm font-extrabold">Your models. Your keys. Your machine.</h2>
+          <p className="mx-auto mt-4 max-w-2xl text-graphite">
+            Plug in the providers you already pay for. Keys are stored locally and never pass through our
+            servers — only your license is checked online. Run fully offline with Ollama if you prefer.
+          </p>
+        </Reveal>
+
+        <div className="mt-12 grid gap-5 sm:grid-cols-2">
+          <Reveal>
+            <ProviderCard label="AI / LLM" sub="Settings → AI Providers" items={aiProviders} />
+          </Reveal>
+          <Reveal delay={0.08}>
+            <ProviderCard label="Transcription" sub="Settings → Audio" items={transcriptionProviders} />
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ProviderCard({ label, sub, items }: { label: string; sub: string; items: readonly string[] }) {
+  return (
+    <div className="ring-hairline h-full rounded-2xl bg-ink-800/40 p-6">
+      <div className="flex items-baseline justify-between">
+        <h3 className="font-brand text-lg font-bold">{label}</h3>
+        <span className="font-brand-mono text-[11px] text-graphite">{sub}</span>
+      </div>
+      <div className="mt-5 flex flex-wrap gap-2">
+        {items.map((it) => (
+          <span
+            key={it}
+            className="rounded-full border border-porcelain/10 bg-ink-950/40 px-3 py-1.5 text-sm text-porcelain/85"
+          >
+            {it}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ── Privacy / local-first band ───────────────────────────────── */
+export function Privacy() {
+  const points = [
+    { icon: HardDrive, t: "Local-first", b: "Transcripts, notes, and history live on your machine — not in a cloud we control." },
+    { icon: Lock, t: "Keys stay home", b: "Your AI and transcription keys are never uploaded or proxied. Only the license check goes online." },
+    { icon: RefreshCw, t: "Fail-closed licensing", b: "Re-verified twice on startup and every 5 minutes. If it can't confirm your license, it locks." },
+  ];
+  return (
+    <section id="privacy" className="relative px-5 py-24">
+      <div className="mx-auto max-w-5xl">
+        <Reveal className="text-center">
+          <SectionLabel>Private by design</SectionLabel>
+          <h2 className="font-brand text-display-sm font-extrabold">What happens on your call, stays on your machine.</h2>
+        </Reveal>
+        <div className="mt-12 grid gap-4 sm:grid-cols-3">
+          {points.map((p, i) => (
+            <Reveal key={p.t} delay={i * 0.08}>
+              <div className="ring-hairline h-full rounded-2xl bg-ink-800/40 p-6">
+                <p.icon className="mb-4 text-live" size={22} />
+                <h3 className="font-brand text-base font-bold">{p.t}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-graphite">{p.b}</p>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
@@ -166,8 +324,8 @@ export function Pricing() {
           <SectionLabel>Pricing</SectionLabel>
           <h2 className="font-brand text-display-sm font-extrabold">Simple subscription. Pay the team directly.</h2>
           <p className="mx-auto mt-4 max-w-2xl text-graphite">
-            Start with a 10-minute free trial. To subscribe, pick a plan and contact the team to pay — we&apos;ll
-            share payment details and activate your key.
+            Start with a {site.trial}. To subscribe, pick a plan and contact the team — we&apos;ll share
+            payment details and activate your product key.
           </p>
         </Reveal>
 
@@ -175,7 +333,7 @@ export function Pricing() {
           {plans.map((p, i) => (
             <Reveal key={p.name} delay={i * 0.08}>
               <div
-                className={`relative h-full rounded-3xl p-7 ${
+                className={`relative flex h-full flex-col rounded-3xl p-7 ${
                   p.highlight
                     ? "bg-gradient-to-b from-gold/15 to-transparent ring-1 ring-gold/30"
                     : "ring-hairline bg-ink-800/40"
@@ -183,7 +341,7 @@ export function Pricing() {
               >
                 {p.highlight && (
                   <div className="absolute right-5 top-5 rounded-full bg-gold px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-ink-950">
-                    Best value
+                    Popular
                   </div>
                 )}
                 <div className="font-brand-mono text-xs uppercase tracking-widest text-graphite">{p.name}</div>
@@ -191,8 +349,9 @@ export function Pricing() {
                   <span className="font-brand text-4xl font-extrabold">{p.price}</span>
                   <span className="mb-1 text-sm text-graphite">{p.period}</span>
                 </div>
-                <ul className="mt-6 space-y-2.5 text-sm text-porcelain/80">
-                  {["One active device at a time", "All AI + transcription providers", "Stealth overlay & shortcuts", "Bring your own keys"].map((li) => (
+                <div className="mt-1 h-4 text-xs text-live">{p.note ?? " "}</div>
+                <ul className="mt-5 space-y-2.5 text-sm text-porcelain/80">
+                  {planIncludes.map((li) => (
                     <li key={li} className="flex items-start gap-2">
                       <Check size={16} className="mt-0.5 shrink-0 text-gold" /> {li}
                     </li>
@@ -210,6 +369,12 @@ export function Pricing() {
             </Reveal>
           ))}
         </div>
+
+        <Reveal delay={0.1}>
+          <p className="mt-8 text-center text-xs text-graphite">
+            One product key = one active device. Moving machines? Contact support for an activation reset.
+          </p>
+        </Reveal>
       </div>
     </section>
   );
@@ -224,9 +389,10 @@ export function Download() {
         <Reveal>
           <div className="grain relative overflow-hidden rounded-[2rem] bg-gradient-to-b from-ink-800/70 to-ink-900/70 p-10 text-center ring-1 ring-gold/15 sm:p-14">
             <div className="pointer-events-none absolute inset-x-0 top-0 -z-0 h-40 bg-aurora-radial" />
-            <h2 className="font-brand text-display-sm font-extrabold">Get Trapotato</h2>
+            <SectionLabel>Get Trapotato</SectionLabel>
+            <h2 className="font-brand text-display-sm font-extrabold">Be the sharpest person on the call.</h2>
             <p className="mx-auto mt-4 max-w-xl text-graphite">
-              Free 10-minute trial included. Windows build available — macOS coming soon.
+              {site.trial} included. {site.platform} build available — macOS coming soon.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               {ready ? (
@@ -270,27 +436,43 @@ export function Footer() {
             <p className="mt-3 text-sm leading-relaxed text-graphite">{site.tagline}</p>
           </div>
 
-          <div>
-            <div className="mb-3 font-brand-mono text-xs uppercase tracking-widest text-graphite">Support &amp; report a bug</div>
-            <div className="flex flex-col gap-2 text-sm">
-              <a href={`mailto:${site.support.email}`} className="inline-flex items-center gap-2 text-porcelain/85 hover:text-gold">
-                <Mail size={15} /> {site.support.email}
-              </a>
-              <a href={site.support.whatsappLink} className="inline-flex items-center gap-2 text-porcelain/85 hover:text-gold">
-                <MessageCircle size={15} /> WhatsApp {site.support.whatsapp}
-              </a>
-              <span className="inline-flex items-center gap-2 text-graphite">
-                <Bug size={15} /> Found a bug? Message us above.
-              </span>
+          <div className="grid grid-cols-2 gap-10">
+            <div>
+              <div className="mb-3 font-brand-mono text-xs uppercase tracking-widest text-graphite">Product</div>
+              <div className="flex flex-col gap-2 text-sm">
+                <a href="/#stealth" className="text-porcelain/85 hover:text-gold">Stealth</a>
+                <a href="/#features" className="text-porcelain/85 hover:text-gold">Features</a>
+                <a href="/#pricing" className="text-porcelain/85 hover:text-gold">Pricing</a>
+                <a href="/docs" className="text-porcelain/85 hover:text-gold">Docs &amp; guide</a>
+              </div>
+            </div>
+            <div>
+              <div className="mb-3 font-brand-mono text-xs uppercase tracking-widest text-graphite">Support</div>
+              <div className="flex flex-col gap-2 text-sm">
+                <a href={`mailto:${site.support.email}`} className="inline-flex items-center gap-2 text-porcelain/85 hover:text-gold">
+                  <Mail size={15} /> Email
+                </a>
+                <a href={site.support.whatsappLink} className="inline-flex items-center gap-2 text-porcelain/85 hover:text-gold">
+                  <MessageCircle size={15} /> WhatsApp
+                </a>
+                <a href={`mailto:${site.support.email}?subject=Trapotato%20bug%20report`} className="inline-flex items-center gap-2 text-porcelain/85 hover:text-gold">
+                  <Bug size={15} /> Report a bug
+                </a>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-porcelain/8 pt-6 text-xs text-graphite sm:flex-row">
           <span>© {new Date().getFullYear()} {site.name}. All rights reserved.</span>
-          <span className="font-brand-mono">{site.domain}</span>
+          <span className="inline-flex items-center gap-1.5 font-brand-mono">
+            <ShieldCheck size={13} className="text-graphite" /> {site.domain}
+          </span>
         </div>
       </div>
     </footer>
   );
 }
+
+/* exported for reuse on subpages */
+export { SectionLabel };

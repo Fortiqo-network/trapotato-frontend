@@ -1,38 +1,33 @@
 import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
-import { Product, Demo, Features, HowItWorks, Pricing, Download, Footer } from "@/components/Sections";
-import { site } from "@/lib/site";
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: site.name,
-  url: site.url,
-  applicationCategory: "BusinessApplication",
-  operatingSystem: "Windows",
-  description: site.description,
-  offers: [
-    { "@type": "Offer", name: "Monthly", price: "50", priceCurrency: "USD" },
-    { "@type": "Offer", name: "3 Months", price: "120", priceCurrency: "USD" },
-    { "@type": "Offer", name: "Annual", price: "400", priceCurrency: "USD" },
-  ],
-};
+import { JsonLd } from "@/components/JsonLd";
+import {
+  Stealth,
+  Features,
+  Actions,
+  Providers,
+  Privacy,
+  HowItWorks,
+  Pricing,
+  Download,
+  Footer,
+} from "@/components/Sections";
+import { graph, organizationLd, websiteLd, softwareApplicationLd } from "@/lib/seo";
 
 export default function Home() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <JsonLd data={graph(organizationLd, websiteLd, softwareApplicationLd)} />
       <AnimatedBackground />
       <Nav />
       <main>
         <Hero />
-        <Product />
-        <Demo />
+        <Stealth />
         <Features />
+        <Actions />
+        <Providers />
+        <Privacy />
         <HowItWorks />
         <Pricing />
         <Download />

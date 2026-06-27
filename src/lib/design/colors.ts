@@ -25,9 +25,16 @@ export const graphite = {
   dim: "#4A4E58",
 } as const;
 
+/** Emerald "live/active" signal — echoes the in-app status accent. */
+export const live = {
+  DEFAULT: "#2EE6A6",
+  deep: "#10B981",
+} as const;
+
 export const colors = {
   ink,
   porcelain,
   gold,
   graphite,
+  live,
 } as const;
