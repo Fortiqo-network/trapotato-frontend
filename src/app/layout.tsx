@@ -47,13 +47,13 @@ export const metadata: Metadata = {
     siteName: site.name,
     title: `${site.name} — Invisible AI Copilot for Meetings & Interviews`,
     description: site.description,
-    images: [{ url: "/og-image.png", width: 1024, height: 1024, alt: `${site.name} logo` }],
+    // OG image is generated dynamically by app/opengraph-image.tsx
   },
   twitter: {
     card: "summary_large_image",
     title: `${site.name} — Invisible AI Copilot`,
     description: site.description,
-    images: ["/og-image.png"],
+    // Twitter image is generated dynamically by app/twitter-image.tsx
   },
   icons: {
     icon: "/icon.png",

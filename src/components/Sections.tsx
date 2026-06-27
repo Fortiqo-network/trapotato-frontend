@@ -264,7 +264,7 @@ export function Footer() {
           <div className="max-w-sm">
             <div className="flex items-center gap-2.5">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.png" alt="Trapotato" width={26} height={26} className="rounded-md" />
+              <img src="/logo.png" alt="Trapotato" width={26} height={26} loading="lazy" decoding="async" className="rounded-md" />
               <span className="font-brand text-lg font-extrabold">{site.name}</span>
             </div>
             <p className="mt-3 text-sm leading-relaxed text-graphite">{site.tagline}</p>

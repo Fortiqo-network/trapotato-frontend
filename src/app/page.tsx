@@ -1,5 +1,6 @@
 import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { Product, Demo, Features, HowItWorks, Pricing, Download, Footer } from "@/components/Sections";
 import { site } from "@/lib/site";
 
@@ -25,6 +26,7 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <AnimatedBackground />
       <Nav />
       <main>
         <Hero />
