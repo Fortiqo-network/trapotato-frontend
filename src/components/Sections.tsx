@@ -16,6 +16,7 @@ import {
   Download as DownloadIcon,
   Check,
   ScreenShareOff,
+  Flame,
   type LucideIcon,
 } from "lucide-react";
 import { Reveal } from "./Reveal";
@@ -23,6 +24,7 @@ import {
   site,
   plans,
   planIncludes,
+  sale,
   features,
   steps,
   actions,
@@ -323,6 +325,11 @@ export function Pricing() {
         <Reveal className="text-center">
           <SectionLabel>Pricing</SectionLabel>
           <h2 className="font-brand text-display-sm font-extrabold">Simple subscription. Pay the team directly.</h2>
+          {sale.active && (
+            <div className="mx-auto mt-5 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-4 py-1.5 text-sm font-semibold text-gold">
+              <Flame size={15} /> {sale.label} — for a limited time
+            </div>
+          )}
           <p className="mx-auto mt-4 max-w-2xl text-graphite">
             Start with a {site.trial}. To subscribe, pick a plan and contact the team — we&apos;ll share
             payment details and activate your product key.
@@ -344,9 +351,21 @@ export function Pricing() {
                     Popular
                   </div>
                 )}
-                <div className="font-brand-mono text-xs uppercase tracking-widest text-graphite">{p.name}</div>
-                <div className="mt-3 flex items-end gap-1">
+                <div className="flex items-center gap-2.5">
+                  <div className="font-brand-mono text-xs uppercase tracking-widest text-graphite">{p.name}</div>
+                  {sale.active && (
+                    <span className="rounded-full bg-rose-500/90 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
+                      −{sale.percent}%
+                    </span>
+                  )}
+                </div>
+                <div className="mt-3 flex items-end gap-2">
                   <span className="font-brand text-4xl font-extrabold">{p.price}</span>
+                  {p.original && (
+                    <span className="mb-1.5 font-brand text-xl font-bold text-graphite line-through decoration-rose-400/80 decoration-2">
+                      {p.original}
+                    </span>
+                  )}
                   <span className="mb-1 text-sm text-graphite">{p.period}</span>
                 </div>
                 <div className="mt-1 h-4 text-xs text-live">{p.note ?? " "}</div>

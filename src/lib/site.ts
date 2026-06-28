@@ -28,10 +28,14 @@ export const nav = [
   { label: "Docs", href: "/docs" },
 ];
 
+// Launch sale: 50% off every plan. `original` is the pre-sale price (shown
+// struck through); `price` is the current, discounted price.
+export const sale = { active: true, percent: 50, label: "Launch sale · 50% off" };
+
 export const plans = [
-  { name: "Monthly", price: "$50", period: "/month", highlight: false },
-  { name: "3 Months", price: "$120", period: "/quarter", highlight: true, note: "Save $30 vs monthly" },
-  { name: "Annual", price: "$400", period: "/year", highlight: false, note: "Best value — save $200" },
+  { name: "Monthly", original: "$50", price: "$25", period: "/month", highlight: false },
+  { name: "3 Months", original: "$120", price: "$60", period: "/quarter", highlight: true, note: "Save $15 vs monthly" },
+  { name: "Annual", original: "$400", price: "$200", period: "/year", highlight: false, note: "Best value — save $100" },
 ];
 
 export const planIncludes = [
