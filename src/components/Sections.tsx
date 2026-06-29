@@ -427,7 +427,7 @@ export function Download() {
                 </span>
               )}
               <a
-                href={`mailto:${site.support.email}?subject=Trapotato%20access`}
+                href="/early-access"
                 className="inline-flex items-center gap-2 rounded-full border border-porcelain/15 px-7 py-3.5 text-sm font-semibold text-porcelain transition-colors hover:bg-porcelain/5"
               >
                 Request early access
@@ -463,6 +463,7 @@ export function Footer() {
                 <a href="/#features" className="text-porcelain/85 hover:text-gold">Features</a>
                 <a href="/#pricing" className="text-porcelain/85 hover:text-gold">Pricing</a>
                 <a href="/docs" className="text-porcelain/85 hover:text-gold">Docs &amp; guide</a>
+                <a href="/early-access" className="text-porcelain/85 hover:text-gold">Early access</a>
               </div>
             </div>
             <div>
@@ -483,7 +484,10 @@ export function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-porcelain/8 pt-6 text-xs text-graphite sm:flex-row">
-          <span>© {new Date().getFullYear()} {site.name}. All rights reserved.</span>
+          <span className="inline-flex items-center gap-3">
+            © {new Date().getFullYear()} {site.name}.
+            <a href="/terms" className="hover:text-gold">Terms &amp; Conditions</a>
+          </span>
           <span className="inline-flex items-center gap-1.5 font-brand-mono">
             <ShieldCheck size={13} className="text-graphite" /> {site.domain}
           </span>

@@ -55,12 +55,12 @@ export default function DownloadPage() {
                 <DownloadIcon size={17} /> Download coming soon
               </span>
             )}
-            <a
-              href={`mailto:${site.support.email}?subject=Trapotato%20early%20access`}
+            <Link
+              href="/early-access"
               className="inline-flex items-center gap-2 rounded-full border border-porcelain/15 px-7 py-3.5 text-sm font-semibold text-porcelain transition-colors hover:bg-porcelain/5"
             >
               Request early access
-            </a>
+            </Link>
           </div>
         </div>
 
