@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Download as DownloadIcon, ShieldAlert, Cpu, Wifi, KeyRound, ArrowRight } from "lucide-react";
+import { ShieldAlert, Cpu, Wifi, KeyRound, ArrowRight } from "lucide-react";
 import { Nav } from "@/components/Nav";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { Footer } from "@/components/Sections";
+import DownloadButtons from "@/components/DownloadButtons";
 import { JsonLd } from "@/components/JsonLd";
 import { graph, breadcrumbLd, softwareApplicationLd } from "@/lib/seo";
 import { site } from "@/lib/site";
@@ -27,7 +28,6 @@ const installSteps = [
 ];
 
 export default function DownloadPage() {
-  const ready = Boolean(site.downloadUrl);
   return (
     <>
       <JsonLd data={graph(breadcrumbLd("Download", "/download"), softwareApplicationLd)} />
@@ -42,25 +42,16 @@ export default function DownloadPage() {
             leave your device.
           </p>
 
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            {ready ? (
-              <a
-                href={site.downloadUrl}
-                className="glow-ring inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-ink-950 transition-transform hover:scale-[1.03]"
+          <div className="mt-8">
+            <DownloadButtons />
+            <div className="mt-4 flex justify-center">
+              <Link
+                href="/early-access"
+                className="inline-flex items-center gap-2 rounded-full border border-porcelain/15 px-7 py-3.5 text-sm font-semibold text-porcelain transition-colors hover:bg-porcelain/5"
               >
-                <DownloadIcon size={17} /> Download for {site.platform}
-              </a>
-            ) : (
-              <span className="inline-flex cursor-not-allowed items-center gap-2 rounded-full bg-porcelain/10 px-7 py-3.5 text-sm font-semibold text-porcelain/60">
-                <DownloadIcon size={17} /> Download coming soon
-              </span>
-            )}
-            <Link
-              href="/early-access"
-              className="inline-flex items-center gap-2 rounded-full border border-porcelain/15 px-7 py-3.5 text-sm font-semibold text-porcelain transition-colors hover:bg-porcelain/5"
-            >
-              Request early access
-            </Link>
+                Request early access
+              </Link>
+            </div>
           </div>
         </div>
 

@@ -9,8 +9,16 @@ export const site = {
   tagline: "Your invisible AI copilot for meetings & interviews.",
   description:
     "Trapotato is a stealth desktop assistant that listens to your call, transcribes it live, and feeds you real-time answers, code hints, and clarifications — through an overlay that never appears on your screen share. Bring your own AI keys; everything stays on your device.",
-  // The download link is wired later; keep empty to show "coming soon".
-  downloadUrl: "",
+  // Stable download URLs — GitHub Releases always serves the newest build under
+  // /releases/latest/download/<fixed-name>, so the site never needs editing per
+  // release. (Asset names are fixed via electron-builder artifactName.)
+  downloadUrl: "https://github.com/Fortiqo-network/release/releases/latest/download/Trapotato-Setup.exe",
+  downloads: {
+    windows:  { label: "Windows", sub: "10/11 · 64-bit", url: "https://github.com/Fortiqo-network/release/releases/latest/download/Trapotato-Setup.exe", available: true },
+    macArm:   { label: "macOS",   sub: "Apple Silicon",  url: "https://github.com/Fortiqo-network/release/releases/latest/download/Trapotato-mac-arm64.dmg", available: true },
+    macIntel: { label: "macOS",   sub: "Intel",          url: "https://github.com/Fortiqo-network/release/releases/latest/download/Trapotato-mac-x64.dmg", available: true },
+    linux:    { label: "Linux",   sub: "AppImage",       url: "https://github.com/Fortiqo-network/release/releases/latest/download/Trapotato.AppImage", available: true },
+  },
   platform: "Windows 10/11",
   trial: "10-minute free trial",
   support: {
