@@ -30,7 +30,7 @@ export const site = {
       ],
     },
     {
-      id: "linux", label: "Linux", sub: "x64", icon: "linux", available: true,
+      id: "linux", label: "Linux", sub: "Coming soon", icon: "linux", available: false,
       options: [
         { kind: "AppImage", note: "Universal — runs anywhere", file: "Trapotato.AppImage" },
         { kind: ".deb", note: "Debian / Ubuntu", file: "Trapotato.deb" },
