@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Download as DownloadIcon } from "lucide-react";
+import { Download, Monitor, Apple, Terminal, Check } from "lucide-react";
 import { site } from "@/lib/site";
 
 type OS = "windows" | "mac" | "linux" | "unknown";
@@ -15,69 +15,92 @@ function detectOS(): OS {
   return "unknown";
 }
 
-// Build the flat list of download targets from site config.
-const targets = [
-  site.downloads.windows,
-  site.downloads.macArm,
-  site.downloads.macIntel,
-  site.downloads.linux,
-] as const;
+const ICONS: Record<string, typeof Monitor> = {
+  windows: Monitor,
+  apple: Apple,
+  linux: Terminal,
+};
 
 export default function DownloadButtons() {
   const [os, setOs] = useState<OS>("unknown");
   useEffect(() => setOs(detectOS()), []);
 
-  // Pick the primary download for the visitor's OS (fall back to Windows).
-  const primary =
-    os === "mac"
-      ? site.downloads.macArm
-      : os === "linux"
-      ? site.downloads.linux
-      : site.downloads.windows;
-
-  const others = targets.filter((t) => t !== primary);
+  const base = site.releaseBase;
+  // Show the visitor's platform first.
+  const platforms = [...site.platforms].sort(
+    (a, b) => (a.id === os ? 0 : 1) - (b.id === os ? 0 : 1)
+  );
 
   return (
-    <div className="flex flex-col items-center gap-5">
-      {/* Primary, OS-detected button */}
-      <div className="flex flex-col items-center gap-3 sm:flex-row">
-        {primary.available ? (
-          <a
-            href={primary.url}
-            className="glow-ring inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-ink-950 transition-transform hover:scale-[1.03]"
+    <div className="grid gap-4 text-left sm:grid-cols-3">
+      {platforms.map((p) => {
+        const Icon = ICONS[p.icon] ?? Monitor;
+        const isYou = p.id === os;
+        return (
+          <div
+            key={p.id}
+            className={`flex flex-col rounded-2xl border p-5 transition-colors ${
+              isYou
+                ? "border-gold/40 bg-gold/[0.06] ring-1 ring-gold/20"
+                : "border-border-subtle bg-ink-800/40 ring-hairline"
+            }`}
           >
-            <DownloadIcon size={17} /> Download for {primary.label}
-            <span className="text-ink-950/60">· {primary.sub}</span>
-          </a>
-        ) : (
-          <span className="inline-flex cursor-not-allowed items-center gap-2 rounded-full bg-porcelain/10 px-7 py-3.5 text-sm font-semibold text-porcelain/60">
-            <DownloadIcon size={17} /> {primary.label} build coming soon
-          </span>
-        )}
-      </div>
+            {/* Header */}
+            <div className="mb-4 flex items-center gap-3">
+              <span
+                className={`grid h-10 w-10 place-items-center rounded-xl ${
+                  isYou ? "bg-gold/15 text-gold" : "bg-porcelain/[0.06] text-porcelain/80"
+                }`}
+              >
+                <Icon size={20} />
+              </span>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h3 className="font-brand text-base font-bold text-porcelain">{p.label}</h3>
+                  {isYou && (
+                    <span className="inline-flex items-center gap-1 rounded-full bg-gold/15 px-2 py-0.5 text-[10px] font-semibold text-gold">
+                      <Check size={10} /> Your OS
+                    </span>
+                  )}
+                </div>
+                <p className="text-xs text-graphite">{p.sub}</p>
+              </div>
+            </div>
 
-      {/* All platforms */}
-      <div className="flex flex-wrap items-center justify-center gap-2">
-        {others.map((t) =>
-          t.available ? (
-            <a
-              key={t.label + t.sub}
-              href={t.url}
-              className="inline-flex items-center gap-1.5 rounded-full border border-porcelain/15 px-4 py-2 text-xs font-medium text-porcelain/80 transition-colors hover:bg-porcelain/5"
-            >
-              <DownloadIcon size={13} /> {t.label}
-              <span className="text-porcelain/40">{t.sub}</span>
-            </a>
-          ) : (
-            <span
-              key={t.label + t.sub}
-              className="inline-flex cursor-not-allowed items-center gap-1.5 rounded-full border border-porcelain/10 px-4 py-2 text-xs font-medium text-porcelain/35"
-            >
-              {t.label} <span className="text-porcelain/25">{t.sub}</span> · soon
-            </span>
-          )
-        )}
-      </div>
+            {/* Options */}
+            <div className="mt-auto flex flex-col gap-2">
+              {p.available ? (
+                p.options.map((o, i) => (
+                  <a
+                    key={o.file}
+                    href={`${base}/${o.file}`}
+                    className={`group flex items-center justify-between gap-3 rounded-xl px-4 py-2.5 text-sm font-semibold transition-transform hover:scale-[1.02] ${
+                      isYou && i === 0
+                        ? "bg-gold text-ink-950"
+                        : "border border-porcelain/15 text-porcelain hover:bg-porcelain/5"
+                    }`}
+                  >
+                    <span className="flex items-center gap-2">
+                      <Download size={15} /> {o.kind}
+                    </span>
+                    <span
+                      className={`text-[10px] font-medium ${
+                        isYou && i === 0 ? "text-ink-950/60" : "text-graphite"
+                      }`}
+                    >
+                      {o.note}
+                    </span>
+                  </a>
+                ))
+              ) : (
+                <span className="rounded-xl border border-porcelain/10 px-4 py-2.5 text-sm font-medium text-porcelain/40">
+                  Coming soon
+                </span>
+              )}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

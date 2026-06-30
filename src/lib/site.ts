@@ -13,12 +13,30 @@ export const site = {
   // /releases/latest/download/<fixed-name>, so the site never needs editing per
   // release. (Asset names are fixed via electron-builder artifactName.)
   downloadUrl: "https://github.com/Fortiqo-network/release/releases/latest/download/Trapotato-Setup.exe",
-  downloads: {
-    windows:  { label: "Windows", sub: "10/11 · 64-bit", url: "https://github.com/Fortiqo-network/release/releases/latest/download/Trapotato-Setup.exe", available: true },
-    macArm:   { label: "macOS",   sub: "Apple Silicon",  url: "https://github.com/Fortiqo-network/release/releases/latest/download/Trapotato-mac-arm64.dmg", available: true },
-    macIntel: { label: "macOS",   sub: "Intel",          url: "https://github.com/Fortiqo-network/release/releases/latest/download/Trapotato-mac-x64.dmg", available: true },
-    linux:    { label: "Linux",   sub: "AppImage",       url: "https://github.com/Fortiqo-network/release/releases/latest/download/Trapotato.AppImage", available: true },
-  },
+  releaseBase: "https://github.com/Fortiqo-network/release/releases/latest/download",
+  platforms: [
+    {
+      id: "windows", label: "Windows", sub: "10 / 11 · 64-bit", icon: "windows", available: true,
+      options: [
+        { kind: "Installer", note: "Recommended", file: "Trapotato-Setup.exe" },
+        { kind: "Portable", note: "No install — just run", file: "Trapotato-Portable.exe" },
+      ],
+    },
+    {
+      id: "mac", label: "macOS", sub: "11 Big Sur or later", icon: "apple", available: true,
+      options: [
+        { kind: "Apple Silicon", note: "M1 / M2 / M3 / M4", file: "Trapotato-mac-arm64.dmg" },
+        { kind: "Intel", note: "x64 Macs", file: "Trapotato-mac-x64.dmg" },
+      ],
+    },
+    {
+      id: "linux", label: "Linux", sub: "x64", icon: "linux", available: true,
+      options: [
+        { kind: "AppImage", note: "Universal — runs anywhere", file: "Trapotato.AppImage" },
+        { kind: ".deb", note: "Debian / Ubuntu", file: "Trapotato.deb" },
+      ],
+    },
+  ],
   platform: "Windows 10/11",
   trial: "10-minute free trial",
   support: {
