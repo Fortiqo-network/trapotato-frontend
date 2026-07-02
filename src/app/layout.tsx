@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Archivo, IBM_Plex_Mono } from "next/font/google";
 import { site } from "@/lib/site";
-import { TermsGate } from "@/components/TermsGate";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
@@ -96,7 +95,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${inter.variable} ${archivo.variable} ${plexMono.variable}`}>
       <body>
         {children}
-        <TermsGate />
       </body>
     </html>
   );

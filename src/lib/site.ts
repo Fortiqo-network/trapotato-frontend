@@ -40,7 +40,7 @@ export const site = {
   platform: "Windows 10/11",
   trial: "10-minute free trial",
   support: {
-    email: "trapotato.fortiqo@gmail.com",
+    email: "team@fortiqo.xyz",
     whatsapp: "+91 7000695135",
     whatsappLink: "https://wa.me/917000695135",
   },
